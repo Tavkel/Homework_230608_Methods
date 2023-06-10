@@ -50,7 +50,7 @@ public class Main {
     //В результате программа должна выводить в консоль сообщение, какую версию приложения (обычную или облегченную) и
     //для какой ОС (Android или iOS) установить пользователю.
     public static void task2() {
-        Phone phone = new Phone(rng.nextInt(2), rng.nextInt(23) + 2000);
+        Phone phone = new Phone(rng.nextInt(3), rng.nextInt(23) + 2000);
         //System.out.println("Телефон: " + Phone.getDeviceOSName(phone.getDeviceOS()) + ", выпущен в  " + phone.getDeviceYear() + " году");
         System.out.printf(getInstallationMessage(phone.getDeviceOS(), phone.getDeviceYear()));
     }
