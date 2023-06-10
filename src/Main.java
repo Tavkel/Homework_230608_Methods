@@ -25,14 +25,14 @@ public class Main {
     public static void task1() {
         int year = rng.nextInt(40_000);
         System.out.println("Randomly generated year: " + year);
-        if (checkIfLeapYear(year)) {
+        if (isLeapYear(year)) {
             System.out.println(year + " год — високосный год");
         } else {
             System.out.println(year + " год — невисокосный год");
         }
     }
 
-    private static boolean checkIfLeapYear(int year) {
+    private static boolean isLeapYear(int year) {
         final int leapYearPeriod = 4;
         final int leapYearException = 100;
         final int leapYearExceptionOverride = 400;
@@ -51,61 +51,55 @@ public class Main {
     //для какой ОС (Android или iOS) установить пользователю.
     public static void task2() {
         Phone phone = new Phone(rng.nextInt(2), rng.nextInt(23) + 2000);
-        System.out.println("Телефон: " + Phone.getDeviceOSName(phone.getDeviceOS()) + ", выпущен в  " + phone.getDeviceYear() + " году");
+        //System.out.println("Телефон: " + Phone.getDeviceOSName(phone.getDeviceOS()) + ", выпущен в  " + phone.getDeviceYear() + " году");
         System.out.printf(getInstallationMessage(phone.getDeviceOS(), phone.getDeviceYear()));
     }
 
     private static String getInstallationMessage(int osId, int year) {
-        //это не должно быть тут
-        final int outOfSupport = 2005;
-        final int oldPhoneCotOffPoint = LocalDate.now().getYear() - 3;
+        final int oldPhoneCutOffPoint = LocalDate.now().getYear() - 3;
+        String result;
 
-        if (year < outOfSupport || Phone.getDeviceOSName(osId) == null) {
-            return "Упс! Похоже, ваш телефон не поддерживается :(\n";
-        } else if (year < oldPhoneCotOffPoint) {
-            return String.format("Установите облегченную версию приложения для %s по ссылке\n", Phone.getDeviceOSName(osId));
+        if (Phone.getDeviceOSName(osId) == null) {
+            result = "Упс! Похоже, ваш телефон не поддерживается :(\n";
+        } else if (year < oldPhoneCutOffPoint) {
+            result = String.format("Установите облегченную версию приложения для %s по ссылке\n", Phone.getDeviceOSName(osId));
         } else {
-            return String.format("Установите версию приложения для %s по ссылке\n", Phone.getDeviceOSName(osId));
+            result = String.format("Установите версию приложения для %s по ссылке\n", Phone.getDeviceOSName(osId));
         }
+        return result;
     }
 
     //Задача 3
     //Возвращаемся к задаче на расчет дней доставки банковской карты.
     //Ваша задача — доработать код, а именно написать метод, который на вход принимает дистанцию и возвращает итоговое
     //количество дней доставки.
-    final static int firstLimit = 20;
-    final static int secondLimit = 60;
-    final static int thirdLimit = 100;
+
 
     private static void task3() {
         int deliveryDistance = rng.nextInt(120);
         int deliveryTime = getDeliveryTime(deliveryDistance);
-        if (checkIfDeliveryAvailable(deliveryTime)) {
+        if (deliveryTime >= 1) {
             System.out.printf("Вы находитесь в радиусе %d километров, доставка займет %d дня\n", deliveryDistance, deliveryTime);
         } else {
             System.out.println("Слишком далеко, доставки нет");
         }
     }
 
-    // бесполезная кривота
-    public static boolean checkIfDeliveryAvailable(int deliveryTime) {
-        return deliveryTime >= 1;
-    }
-
     private static int getDeliveryTime(int deliveryDistance) {
-
-        int deliveryTime = 1;
+        final int firstLimit = 20;
+        final int secondLimit = 60;
+        final int thirdLimit = 100;
+        int deliveryTime;
 
         if (deliveryDistance <= firstLimit) {
-            return deliveryTime;
+            deliveryTime = 1;
         } else if (deliveryDistance <= secondLimit) {
-            deliveryTime += 1;
-            return deliveryTime;
+            deliveryTime = 2;
         } else if (deliveryDistance <= thirdLimit) {
-            deliveryTime += 2;
-            return deliveryTime;
+            deliveryTime = 3;
         } else {
-            return -1;
+            deliveryTime = -1;
         }
+        return deliveryTime;
     }
 }
