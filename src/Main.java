@@ -87,8 +87,9 @@ public class Main {
         }
     }
 
+    // бесполезная кривота
     public static boolean checkIfDeliveryAvailable(int deliveryTime) {
-        return deliveryTime >= 0 && deliveryTime <= 100;
+        return deliveryTime >= 1;
     }
 
     private static int getDeliveryTime(int deliveryDistance) {
